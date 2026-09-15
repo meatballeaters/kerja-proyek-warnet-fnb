@@ -1,33 +1,26 @@
 <?php
-// 1. Panggil koneksi database (c.php) terlebih dahulu
 require_once __DIR__ . '/c.php';
 
-// 2. Panggil file pendukung menggunakan path absolut __DIR__
 include_once __DIR__ . '/../extends/header.php';
 include_once __DIR__ . '/../extends/style.php';
 include_once __DIR__ . '/../extends/keranjang.php';
 
-$category_id = $_GET['category'] ?? 1; // Default ke kategori 1 jika null
+$category_id = $_GET['category'] ?? 1;
 
 try {
-    $stmt = $pdo->prepare("SELECT * FROM products WHERE type = ? AND is_available = true");
-    $stmt->execute(['minuman']);
-    $drink_products = $stmt->fetchAll() ?: []; // Ganti $stmt_cat menjadi $stmt di sini
+    // 1. Ambil data produk tipe minuman
+    $stmt = $pdo->prepare("SELECT * FROM products WHERE LOWER(type) = 'minuman' AND is_available = true");
+    $stmt->execute();
+    $drink_products = $stmt->fetchAll() ?: [];
 
-    $stmt_cat = $pdo->query("SELECT * FROM categories WHERE type = 'minuman'");
+    // 2. Ambil kategori minuman
+    $stmt_cat = $pdo->query("SELECT * FROM categories WHERE LOWER(type) = 'minuman'");
     $drink_categories = $stmt_cat->fetchAll() ?: [];
 } catch (PDOException $e) {
     $drink_products = [];
     $drink_categories = [];
-    die("Error Query Vercel: " . $e->getMessage());
 }
-} catch (PDOException $e) {
-    // Tetapkan array kosong agar JavaScript tidak crash jika query gagal
-    $drink_products = [];
-    $drink_categories = [];
-    die("Error Query Vercel: " . $e->getMessage());
-}
-// Eksekusi fungsi koneksi untuk variabel $active_pc jika belum dipanggil
+
 $active_pc = getActiveClientPC($pdo);
 ?>
 
@@ -134,8 +127,7 @@ $active_pc = getActiveClientPC($pdo);
     </div>
 
     <script>
-        // Data Produk Minuman diambil langsung dari Database MySQL via PHP JSON Encode
-        const DRINK_PRODUCTS = <?= json_encode($drink_products, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
+        const DRINK_PRODUCTS = <?= json_encode($drink_products ?? [], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?> || [];
 
         let activeCategory = 'all';
         let cartItems = JSON.parse(localStorage.getItem('cyberbite_cart') || '[]');
@@ -211,7 +203,7 @@ $active_pc = getActiveClientPC($pdo);
             selectedProductForModal = DRINK_PRODUCTS.find(p => parseInt(p.id) === parseInt(id));
             if (!selectedProductForModal) return;
 
-            document.getElementById('modal-img').src = selectedProductForModal.image;
+            document.getElementById('modal-img').src = selectedProductForModal.image_url;
             document.getElementById('modal-title').innerText = selectedProductForModal.name;
             document.getElementById('modal-desc').innerText = selectedProductForModal.description || '';
             document.getElementById('modal-price').innerText = formatRupiah(parseFloat(selectedProductForModal.price));
@@ -255,7 +247,7 @@ $active_pc = getActiveClientPC($pdo);
                 id: selectedProductForModal.id,
                 name: selectedProductForModal.name,
                 price: parseFloat(selectedProductForModal.price),
-                image: selectedProductForModal.image,
+                image_url: selectedProductForModal.image_url,
                 variant: selectedVariant,
                 notes: notes,
                 qty: currentModalQty,
@@ -415,10 +407,6 @@ $active_pc = getActiveClientPC($pdo);
             setTimeout(() => {
                 toast.classList.add('-translate-y-10', 'opacity-0', 'pointer-events-none');
             }, 2500);
-        }
-
-        function triggerLogoutModal() {
-            showToast("Sesi komputer <?= htmlspecialchars($active_pc['pc_name']) ?> masih aktif.");
         }
 
         function formatRupiah(num) {
