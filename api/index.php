@@ -103,7 +103,7 @@ $active_pc = getActiveClientPC($pdo);
 
                 <div class="space-y-1.5">
                     <label class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
-                        <span>Catatan Khusus untuk Dapur:</span>
+                        <span>Catatan Khusus:</span>
                         <span class="text-[10px] text-slate-500 lowercase font-normal">(opsional)</span>
                     </label>
                     <textarea id="modal-notes" rows="2" placeholder="Contoh: Telur setengah matang, jangan pakai sawi, banyakin kuah..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 resize-none"></textarea>
