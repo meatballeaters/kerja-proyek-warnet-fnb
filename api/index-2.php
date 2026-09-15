@@ -14,7 +14,7 @@ try {
     $stmt->execute(['minuman']);
     $drink_products = $stmt->fetchAll();
 
-    $stmt_cat = $pdo->query("SELECT * FROM categories WHERE type = 'minuman'");
+    $stmt_cat = $pdo->query("SELECT * FROM categories WHERE LOWER(type) = 'minuman'");
     $drink_categories = $stmt_cat->fetchAll();
 } catch (PDOException $e) {
     // Tampilkan error query langsung di Vercel untuk mendiagnosis
