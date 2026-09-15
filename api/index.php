@@ -251,7 +251,7 @@ $active_pc = getActiveClientPC($pdo);
                 id: selectedProductForModal.id,
                 name: selectedProductForModal.name,
                 price: parseFloat(selectedProductForModal.price),
-                image: selectedProductForModal.image,
+                image_url: selectedProductForModal.image_url,
                 variant: selectedVariant,
                 notes: notes,
                 qty: currentModalQty,
