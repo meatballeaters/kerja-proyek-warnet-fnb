@@ -7,6 +7,18 @@ include_once __DIR__ . '/../extends/header.php';
 include_once __DIR__ . '/../extends/style.php';
 include_once __DIR__ . '/../extends/keranjang.php';
 
+// Tampilkan error PDO secara jelas di browser
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// Tes query langsung ke tabel produk
+try {
+    $stmt = $pdo->query("SELECT * FROM products");
+    $test_data = $stmt->fetchAll();
+    echo "<pre>"; var_dump($test_data); echo "</pre>";
+} catch (PDOException $e) {
+    echo "Error Query PostgreSQL: " . $e->getMessage();
+}
+die();
 // Eksekusi fungsi koneksi untuk variabel $active_pc jika belum dipanggil
 $active_pc = getActiveClientPC($pdo);
 ?>
