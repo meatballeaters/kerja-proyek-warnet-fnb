@@ -10,15 +10,17 @@ include_once __DIR__ . '/../extends/keranjang.php';
 $category_id = $_GET['category'] ?? 1; // Default ke kategori 1 jika null
 
 try {
-    $stmt = $pdo->prepare("SELECT * FROM products WHERE LOWER(type) = LOWER(?) AND is_available = true");
-    $stmt->execute(['minuman']);
-    $drink_products = $stmt->fetchAll();
+    // Gunakan LOWER() agar aman dari beda huruf besar-kecil di PostgreSQL
+    $stmt = $pdo->prepare("SELECT * FROM products WHERE LOWER(type) = 'minuman' AND is_available = true");
+    $stmt->execute();
+    $drink_products = $stmt->fetchAll() ?: [];
 
     $stmt_cat = $pdo->query("SELECT * FROM categories WHERE LOWER(type) = 'minuman'");
-    $drink_categories = $stmt_cat->fetchAll();
+    $drink_categories = $stmt_cat->fetchAll() ?: [];
 } catch (PDOException $e) {
-    // Tampilkan error query langsung di Vercel untuk mendiagnosis
-    die("Error Query Vercel: " . $e->getMessage());
+    // Tetapkan array kosong agar JavaScript tidak crash jika query gagal
+    $drink_products = [];
+    $drink_categories = [];
 }
 // Eksekusi fungsi koneksi untuk variabel $active_pc jika belum dipanggil
 $active_pc = getActiveClientPC($pdo);
