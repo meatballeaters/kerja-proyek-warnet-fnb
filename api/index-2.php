@@ -10,7 +10,7 @@ include_once __DIR__ . '/../extends/keranjang.php';
 $category_id = $_GET['category'] ?? 1; // Default ke kategori 1 jika null
 
 try {
-    $stmt = $pdo->prepare("SELECT * FROM products WHERE type = ? AND is_available = true");
+    $stmt = $pdo->prepare("SELECT * FROM products WHERE LOWER(type) = LOWER(?) AND is_available = true");
     $stmt->execute(['minuman']);
     $drink_products = $stmt->fetchAll();
 
