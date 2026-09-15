@@ -91,9 +91,9 @@ $active_pc = getActiveClientPC($pdo);
                 <div class="space-y-1.5">
                     <label class="text-xs font-bold text-slate-300 uppercase tracking-wider block">Pilih Varian Suhu & Es:</label>
                     <div class="grid grid-cols-3 gap-2">
-                        <button onclick="selectVariant(this, 'Dingin (Normal Ice)')" class="variant-btn active bg-cyan-600 border border-cyan-500 text-white text-[11px] font-bold py-2 rounded-xl transition">Normal Ice</button>
-                        <button onclick="selectVariant(this, 'Dingin (Less Ice)')" class="variant-btn bg-slate-800 border border-slate-700 text-slate-300 text-[11px] font-bold py-2 rounded-xl transition">Less Ice</button>
-                        <button onclick="selectVariant(this, 'Hangat (Hot)')" class="variant-btn bg-slate-800 border border-slate-700 text-slate-300 text-[11px] font-bold py-2 rounded-xl transition">Hangat (Hot)</button>
+                        <button onclick="selectVariant(this, 'Hangat (Hot)')" class="variant-btn bg-slate-800 border border-slate-700 text-slate-300 text-[11px] font-bold py-2 rounded-xl transition">Hangat</button>
+                        <button onclick="selectVariant(this, 'Dingin (Normal Ice)')" class="variant-btn active bg-cyan-600 border border-cyan-500 text-white text-[11px] font-bold py-2 rounded-xl transition">Dingin Biasa</button>
+                        <button onclick="selectVariant(this, 'Dingin (Less Ice)')" class="variant-btn bg-slate-800 border border-slate-700 text-slate-300 text-[11px] font-bold py-2 rounded-xl transition">Sedikit Dingin</button>
                     </div>
                 </div>
 
