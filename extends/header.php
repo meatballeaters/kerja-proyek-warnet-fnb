@@ -22,7 +22,7 @@ try {
         SELECT p.id, p.category_id, c.slug AS category_slug, p.name, p.price, p.image_url AS image, p.description 
         FROM products p 
         JOIN categories c ON p.category_id = c.id 
-        WHERE p.type = 'makanan' AND p.is_available = 1 
+        WHERE p.type = 'makanan' AND p.is_available = true
         ORDER BY p.id ASC
     ");
     $food_products = $stmt_food->fetchAll();
@@ -35,7 +35,7 @@ try {
         SELECT p.id, p.category_id, c.slug AS category_slug, p.name, p.price, p.image_url AS image, p.description 
         FROM products p 
         JOIN categories c ON p.category_id = c.id 
-        WHERE p.type = 'minuman' AND p.is_available = 1 
+        WHERE p.type = 'minuman' AND p.is_available = true
         ORDER BY p.id ASC
     ");
     $drink_products = $stmt_drink->fetchAll();
