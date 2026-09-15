@@ -170,7 +170,7 @@ $active_pc = getActiveClientPC($pdo);
                 card.innerHTML = `
                     <div>
                         <div class="relative overflow-hidden h-28 bg-slate-800">
-                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img src="${p.image_url}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         </div>
                         <div class="p-3 space-y-1">
                             <h3 class="text-xs font-bold text-slate-100 line-clamp-2 leading-snug">${p.name}</h3>
@@ -320,7 +320,7 @@ $active_pc = getActiveClientPC($pdo);
                 card.className = "bg-slate-950/60 border border-slate-800 rounded-xl p-3 flex items-center justify-between gap-3";
                 card.innerHTML = `
                     <div class="flex items-center gap-3">
-                        <img src="${item.image}" alt="${item.name}" class="w-14 h-14 rounded-lg object-cover bg-slate-800 border border-slate-800 shrink-0">
+                        <img src="${item.image_url}" alt="${item.name}" class="w-14 h-14 rounded-lg object-cover bg-slate-800 border border-slate-800 shrink-0">
                         <div class="space-y-0.5">
                             <div class="flex items-center gap-1.5">
                                 ${typeBadge}
