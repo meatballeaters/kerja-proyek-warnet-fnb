@@ -1,16 +1,29 @@
 <?php
 /**
  * Configuration & Database Connection for CyberBite Warnet
- * Database: warnet
+ * Database: Supabase PostgreSQL
  */
 
-$db_host = 'localhost';
-$db_user = 'root';
-$db_pass = ''; // Sesuaikan dengan password MySQL lokal Anda
-$db_name = 'warnet';
+$db_url = getenv('DATABASE_URL');
+
+if ($db_url) {
+    $dbopts = parse_url($db_url);
+    $host   = $dbopts['host'];
+    $port   = $dbopts['port'] ?? '6543';
+    $user   = $dbopts['user'];
+    $pass   = $dbopts['pass'];
+    $dbname = ltrim($dbopts['path'], '/');
+} else {
+    // Sesuaikan dengan kredensial Supabase milikmu jika berjalan lokal
+    $host   = 'aws-0-ap-northeast-1.pooler.supabase.com';
+    $port   = '6543';
+    $user   = 'postgres.besmsjllkcqdspgascsc';
+    $pass   = '02jd_o1erv24';
+    $dbname = 'postgres';
+}
 
 try {
-    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass, [
+    $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
@@ -19,19 +32,13 @@ try {
     die("Gagal Terhubung ke Database Warnet: " . $e->getMessage());
 }
 
-/**
- * Mendeteksi PC Client secara otomatis berdasarkan REMOTE_ADDR (IP Address)
- */
 function getActiveClientPC($pdo) {
-    // Ambil IP lokal client yang mengakses website
     $client_ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
     
-    // Query kecocokan IP ke tabel pc_clients
     $stmt = $pdo->prepare("SELECT * FROM pc_clients WHERE ip_address = ? LIMIT 1");
     $stmt->execute([$client_ip]);
     $client = $stmt->fetch();
     
-    // Jika mengakses dari localhost atau IP belum terdaftar, gunakan fallback default (PC-05)
     if (!$client) {
         return [
             'pc_name' => 'PC-05',
