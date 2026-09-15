@@ -1,6 +1,7 @@
 <?php
-require_once file_exists('config.php') ? 'config.php' : 'c.php';
-
+require_once __DIR__ . '/c.php';
+// Eksekusi fungsi koneksi untuk variabel $active_pc jika belum dipanggil
+$active_pc = getActiveClientPC($pdo);
 // Deteksi otomatis PC Client berdasarkan IP
 $active_pc = getActiveClientPC($pdo);
 
