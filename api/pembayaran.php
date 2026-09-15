@@ -96,9 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
-include '/../extends/header.php';
-include '/../extends/keranjang.php';
-include '/../extends/style.php';
+include '../extends/header.php';
+include '../extends/keranjang.php';
+include '../extends/style.php';
 ?>
 
     <!-- KONTEN UTAMA: HALAMAN METODE PEMBAYARAN -->
