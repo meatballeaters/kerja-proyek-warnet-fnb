@@ -21,6 +21,7 @@ try {
     // Tetapkan array kosong agar JavaScript tidak crash jika query gagal
     $drink_products = [];
     $drink_categories = [];
+    die("Error Query Vercel: " . $e->getMessage());
 }
 // Eksekusi fungsi koneksi untuk variabel $active_pc jika belum dipanggil
 $active_pc = getActiveClientPC($pdo);
