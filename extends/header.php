@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/c.php';
+require_once __DIR__ . '/../api/c.php';
 // Eksekusi fungsi koneksi untuk variabel $active_pc jika belum dipanggil
 $active_pc = getActiveClientPC($pdo);
 // Deteksi otomatis PC Client berdasarkan IP
