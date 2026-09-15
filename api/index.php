@@ -7,19 +7,19 @@ include_once __DIR__ . '/../extends/header.php';
 include_once __DIR__ . '/../extends/style.php';
 include_once __DIR__ . '/../extends/keranjang.php';
 
-// $category_id = $_GET['category'] ?? 1;
+$category_id = $_GET['category'] ?? 1;
 
-// try {
-//     $stmt = $pdo->prepare("SELECT * FROM products WHERE type = ? AND is_available = true");
-//     $stmt->execute(['makanan']);
-//     $food_products = $stmt->fetchAll();
+try {
+    $stmt = $pdo->prepare("SELECT * FROM products WHERE type = ? AND is_available = true");
+    $stmt->execute(['makanan']);
+    $food_products = $stmt->fetchAll();
 
-//     $stmt_cat = $pdo->query("SELECT * FROM categories WHERE type = 'makanan'");
-//     $food_categories = $stmt_cat->fetchAll();
-// } catch (PDOException $e) {
-//     // Tampilkan error query langsung di Vercel untuk mendiagnosis
-//     die("Error Query Vercel: " . $e->getMessage());
-// }
+    $stmt_cat = $pdo->query("SELECT * FROM categories WHERE type = 'makanan'");
+    $food_categories = $stmt_cat->fetchAll();
+} catch (PDOException $e) {
+    // Tampilkan error query langsung di Vercel untuk mendiagnosis
+    die("Error Query Vercel: " . $e->getMessage());
+}
 
 // Eksekusi fungsi koneksi untuk variabel $active_pc jika belum dipanggil
 $active_pc = getActiveClientPC($pdo);
