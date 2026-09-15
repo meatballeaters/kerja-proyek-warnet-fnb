@@ -7,6 +7,16 @@ include_once __DIR__ . '/../extends/header.php';
 include_once __DIR__ . '/../extends/style.php';
 include_once __DIR__ . '/../extends/keranjang.php';
 
+$category_id = $_GET['category'] ?? 1; // Default ke kategori 1 jika null
+
+try {
+    $stmt = $pdo->prepare("SELECT * FROM products WHERE type = ? AND is_available = true");
+    $stmt->execute(['minuman']);
+    $foods = $stmt->fetchAll();
+} catch (PDOException $e) {
+    // Tampilkan error query langsung di Vercel untuk mendiagnosis
+    die("Error Query Vercel: " . $e->getMessage());
+}
 // Eksekusi fungsi koneksi untuk variabel $active_pc jika belum dipanggil
 $active_pc = getActiveClientPC($pdo);
 ?>
