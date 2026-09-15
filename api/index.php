@@ -12,7 +12,7 @@ $category_id = $_GET['category'] ?? 1;
 try {
     $stmt = $pdo->prepare("SELECT * FROM products WHERE type = ? AND is_available = true");
     $stmt->execute(['makanan']);
-    $foods = $stmt->fetchAll();
+    $food_products = $stmt->fetchAll();
 } catch (PDOException $e) {
     // Tampilkan error query langsung di Vercel untuk mendiagnosis
     die("Error Query Vercel: " . $e->getMessage());
