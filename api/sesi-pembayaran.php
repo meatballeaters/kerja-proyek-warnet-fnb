@@ -1,5 +1,11 @@
 <?php
-require_once file_exists('config.php') ? 'config.php' : 'c.php';
+// 1. Panggil koneksi database (c.php) terlebih dahulu
+require_once __DIR__ . '/c.php';
+
+// 2. Panggil file pendukung menggunakan path absolut __DIR__
+include_once __DIR__ . '/../extends/header.php';
+include_once __DIR__ . '/../extends/style.php';
+include_once __DIR__ . '/../extends/keranjang.php';
 
 // Deteksi otomatis PC Client berdasarkan IP Address lokal
 $active_pc = getActiveClientPC($pdo);
@@ -59,9 +65,6 @@ try {
 } catch (Exception $e) {
     $orders_with_items = [];
 }
-include '../extends/header.php';
-include '../extends/keranjang.php';
-include '../extends/style.php';
 ?>
 <!DOCTYPE html>
 <html lang="id" class="dark">
