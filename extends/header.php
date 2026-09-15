@@ -13,59 +13,59 @@ $is_status_page  = in_array($current_page, ['sesi-pembayaran.php', 'status.php']
 $is_makanan_page = in_array($current_page, ['index.php', 'makanan.php', 'index.php']);
 $is_minuman_page = in_array($current_page, ['index-2.php', 'minuman.php']);
 
-try {
-    // 1. Fetch Kategori & Produk Makanan
-    $stmt_cat_food = $pdo->query("SELECT * FROM categories WHERE type = 'makanan' ORDER BY sort_order ASC");
-    $food_categories = $stmt_cat_food->fetchAll();
+// try {
+//     // 1. Fetch Kategori & Produk Makanan
+//     $stmt_cat_food = $pdo->query("SELECT * FROM categories WHERE type = 'makanan' ORDER BY sort_order ASC");
+//     $food_categories = $stmt_cat_food->fetchAll();
 
-    $stmt_food = $pdo->query("
-        SELECT p.id, p.category_id, c.slug AS category_slug, p.name, p.price, p.image_url AS image, p.description 
-        FROM products p 
-        JOIN categories c ON p.category_id = c.id 
-        WHERE p.type = 'makanan' AND p.is_available = true
-        ORDER BY p.id ASC
-    ");
-    $food_products = $stmt_food->fetchAll();
+//     $stmt_food = $pdo->query("
+//         SELECT p.id, p.category_id, c.slug AS category_slug, p.name, p.price, p.image_url AS image, p.description 
+//         FROM products p 
+//         JOIN categories c ON p.category_id = c.id 
+//         WHERE p.type = 'makanan' AND p.is_available = true
+//         ORDER BY p.id ASC
+//     ");
+//     $food_products = $stmt_food->fetchAll();
 
-    // 2. Fetch Kategori & Produk Minuman
-    $stmt_cat_drink = $pdo->query("SELECT * FROM categories WHERE type = 'minuman' ORDER BY sort_order ASC");
-    $drink_categories = $stmt_cat_drink->fetchAll();
+//     // 2. Fetch Kategori & Produk Minuman
+//     $stmt_cat_drink = $pdo->query("SELECT * FROM categories WHERE type = 'minuman' ORDER BY sort_order ASC");
+//     $drink_categories = $stmt_cat_drink->fetchAll();
 
-    $stmt_drink = $pdo->query("
-        SELECT p.id, p.category_id, c.slug AS category_slug, p.name, p.price, p.image_url AS image, p.description 
-        FROM products p 
-        JOIN categories c ON p.category_id = c.id 
-        WHERE p.type = 'minuman' AND p.is_available = true
-        ORDER BY p.id ASC
-    ");
-    $drink_products = $stmt_drink->fetchAll();
+//     $stmt_drink = $pdo->query("
+//         SELECT p.id, p.category_id, c.slug AS category_slug, p.name, p.price, p.image_url AS image, p.description 
+//         FROM products p 
+//         JOIN categories c ON p.category_id = c.id 
+//         WHERE p.type = 'minuman' AND p.is_available = true
+//         ORDER BY p.id ASC
+//     ");
+//     $drink_products = $stmt_drink->fetchAll();
 
-    // 3. Fetch Riwayat Pesanan Terakhir untuk PC Client Aktif
-    $stmt = $pdo->prepare("
-        SELECT * FROM orders 
-        WHERE pc_name = ? 
-        ORDER BY id DESC 
-        LIMIT 10
-    ");
-    $stmt->execute([$active_pc['pc_name']]);
-    $my_orders = $stmt->fetchAll();
+//     // 3. Fetch Riwayat Pesanan Terakhir untuk PC Client Aktif
+//     $stmt = $pdo->prepare("
+//         SELECT * FROM orders 
+//         WHERE pc_name = ? 
+//         ORDER BY id DESC 
+//         LIMIT 10
+//     ");
+//     $stmt->execute([$active_pc['pc_name']]);
+//     $my_orders = $stmt->fetchAll();
 
-    // Fetch rincian order_items untuk setiap pesanan
-    $orders_with_items = [];
-    foreach ($my_orders as $ord) {
-        $stmt_items = $pdo->prepare("SELECT * FROM order_items WHERE order_id = ?");
-        $stmt_items->execute([$ord['id']]);
-        $ord['items'] = $stmt_items->fetchAll();
-        $orders_with_items[] = $ord;
-    }
+//     // Fetch rincian order_items untuk setiap pesanan
+//     $orders_with_items = [];
+//     foreach ($my_orders as $ord) {
+//         $stmt_items = $pdo->prepare("SELECT * FROM order_items WHERE order_id = ?");
+//         $stmt_items->execute([$ord['id']]);
+//         $ord['items'] = $stmt_items->fetchAll();
+//         $orders_with_items[] = $ord;
+//     }
 
-} catch (Exception $e) {
-    $food_categories = [];
-    $food_products = [];
-    $drink_categories = [];
-    $drink_products = [];
-    $orders_with_items = [];
-}
+// } catch (Exception $e) {
+//     $food_categories = [];
+//     $food_products = [];
+//     $drink_categories = [];
+//     $drink_products = [];
+//     $orders_with_items = [];
+// }
 ?>
 <!DOCTYPE html>
 <html lang="id" class="dark">
