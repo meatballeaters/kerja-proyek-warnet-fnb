@@ -1,4 +1,15 @@
-<?php include '../extends/header.php'; include '../extends/style.php'; include '../extends/keranjang.php'; ?>    
+<?php
+// 1. Panggil koneksi database (c.php) terlebih dahulu
+require_once __DIR__ . '/c.php';
+
+// 2. Panggil file pendukung menggunakan path absolut __DIR__
+include_once __DIR__ . '/../extends/header.php';
+include_once __DIR__ . '/../extends/style.php';
+include_once __DIR__ . '/../extends/keranjang.php';
+
+// Eksekusi fungsi koneksi untuk variabel $active_pc jika belum dipanggil
+$active_pc = getActiveClientPC($pdo);
+?>
 
 <main class="max-w-7xl mx-auto px-6 pt-6 space-y-6">        
         <!-- Search & Dynamic Filter Section -->
