@@ -59,9 +59,9 @@ try {
 } catch (Exception $e) {
     $orders_with_items = [];
 }
-include '/../extends/header.php';
-include '/../extends/keranjang.php';
-include '/../extends/style.php';
+include '../extends/header.php';
+include '../extends/keranjang.php';
+include '../extends/style.php';
 ?>
 <!DOCTYPE html>
 <html lang="id" class="dark">
