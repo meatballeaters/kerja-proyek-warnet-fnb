@@ -1,4 +1,4 @@
-<?php include '/../extends/header.php'; include '/../extends/style.php'; include '/../extends/keranjang.php'; ?>
+<?php include '../extends/header.php'; include '../extends/style.php'; include '../extends/keranjang.php'; ?>
 
     <main class="max-w-7xl mx-auto px-6 pt-6 space-y-6">
         
