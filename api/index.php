@@ -95,9 +95,9 @@ $active_pc = getActiveClientPC($pdo);
                 <div class="space-y-1.5">
                     <label class="text-xs font-bold text-slate-300 uppercase tracking-wider block">Pilih Tingkat Pedas / Varian:</label>
                     <div class="grid grid-cols-3 gap-2">
-                        <button onclick="selectVariant(this, 'Pedas Normal')" class="variant-btn active bg-brand-600 border border-brand-500 text-white text-[11px] font-bold py-2 rounded-xl transition">Normal</button>
-                        <button onclick="selectVariant(this, 'Pedas Banget')" class="variant-btn bg-slate-800 border border-slate-700 text-slate-300 text-[11px] font-bold py-2 rounded-xl transition">Ekstra Pedas</button>
-                        <button onclick="selectVariant(this, 'Tidak Pedas')" class="variant-btn bg-slate-800 border border-slate-700 text-slate-300 text-[11px] font-bold py-2 rounded-xl transition">Tidak Pedas</button>
+                        <button onclick="selectVariant(this, 'Tidak Pedas')" class="variant-btn bg-slate-800 border border-slate-700 text-slate-300 text-[11px] font-bold py-2 rounded-xl transition">Normal</button>
+                        <button onclick="selectVariant(this, 'Pedas Normal')" class="variant-btn active bg-brand-600 border border-brand-500 text-white text-[11px] font-bold py-2 rounded-xl transition">Pedas Biasa</button>
+                        <button onclick="selectVariant(this, 'Pedas Banget')" class="variant-btn bg-slate-800 border border-slate-700 text-slate-300 text-[11px] font-bold py-2 rounded-xl transition">Pedas Extra</button>
                     </div>
                 </div>
 
