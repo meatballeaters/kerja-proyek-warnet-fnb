@@ -332,7 +332,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                     setTimeout(() => {
                         window.location.href = 'sesi-pembayaran.php';
-                    }, 1200);
+                    }, 1000);
                 } else {
                     alert("Gagal memproses transaksi: " + res.message);
                     btnConfirm.disabled = false;
