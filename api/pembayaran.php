@@ -293,52 +293,55 @@ include_once __DIR__ . '/../extends/keranjang.php';
             }
         }
 
-        async function confirmPaymentProcess() {
-            if (cartItems.length === 0) return;
+        let isProcessing = false;
 
+        async function confirmPaymentProcess() {
+            if (cartItems.length === 0 || isProcessing) return;
+        
+            isProcessing = true; // Kunci proses
             const btnConfirm = document.getElementById('btn-confirm-pay');
             btnConfirm.disabled = true;
             btnConfirm.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-xs"></i> <span>Menyimpan...</span>`;
-
+        
             const formData = new FormData();
             formData.append('action', 'process_order');
             formData.append('cart_data', JSON.stringify(cartItems));
             formData.append('payment_method', selectedMethod);
-
+        
             try {
                 const response = await fetch('pembayaran.php', {
                     method: 'POST',
                     body: formData
                 });
+                
                 const res = await response.json();
-
+        
                 if (res.success) {
                     showToast(res.message);
                     
-                    // Simpan response transaksi aktif ke LocalStorage untuk pelacakan di sesi-pembayaran.php
                     localStorage.setItem('cyberbite_active_payment', JSON.stringify({
                         orderCode: res.order_code,
                         dbOrderId: res.order_id,
                         method: res.payment_method,
                         totalAmount: res.total,
-                        pcName: res.pc_name,
-                        orderTime: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+                        pcName: res.pc_name
                     }));
-
-                    // Kosongkan keranjang di browser setelah sukses tersimpan di MySQL
+        
                     localStorage.removeItem('cyberbite_cart');
-
+        
                     setTimeout(() => {
                         window.location.href = 'sesi-pembayaran.php';
-                    }, 1000);
+                    }, 800);
                 } else {
                     alert("Gagal memproses transaksi: " + res.message);
+                    isProcessing = false;
                     btnConfirm.disabled = false;
                     btnConfirm.innerHTML = `<i class="fa-solid fa-lock text-xs"></i> <span>Bayar sekarang!</span>`;
                 }
             } catch (err) {
                 console.error(err);
-                alert("Terjadi kesalahan koneksi server, silahkan coba lagi.");
+                alert("Terjadi kesalahan koneksi server, silakan coba lagi.");
+                isProcessing = false;
                 btnConfirm.disabled = false;
                 btnConfirm.innerHTML = `<i class="fa-solid fa-lock text-xs"></i> <span>Bayar sekarang!</span>`;
             }
