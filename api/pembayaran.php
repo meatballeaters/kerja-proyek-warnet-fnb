@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/c.php';
 // -------------------------------------------------------------------
 // 1. DETEKSI OTOMATIS IDENTITAS PC CLIENT DARI DATABASE LOKAL
 // -------------------------------------------------------------------
@@ -93,8 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         exit;
     }
 }
-require_once __DIR__ . '/c.php';
-
 include_once __DIR__ . '/../extends/header.php';
 include_once __DIR__ . '/../extends/style.php';
 include_once __DIR__ . '/../extends/keranjang.php';
