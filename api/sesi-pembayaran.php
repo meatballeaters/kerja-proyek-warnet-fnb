@@ -1,12 +1,6 @@
 <?php
 // 1. Panggil koneksi database (c.php) terlebih dahulu
 require_once __DIR__ . '/c.php';
-
-// 2. Panggil file pendukung menggunakan path absolut __DIR__
-include_once __DIR__ . '/../extends/header.php';
-include_once __DIR__ . '/../extends/style.php';
-include_once __DIR__ . '/../extends/keranjang.php';
-
 // Deteksi otomatis PC Client berdasarkan IP Address lokal
 $active_pc = getActiveClientPC($pdo);
 
@@ -72,6 +66,11 @@ try {
 } catch (Exception $e) {
     $orders_with_items = [];
 }
+
+// Panggil file pendukung menggunakan path absolut __DIR__
+include_once __DIR__ . '/../extends/header.php';
+include_once __DIR__ . '/../extends/style.php';
+include_once __DIR__ . '/../extends/keranjang.php';
 ?>
 <!DOCTYPE html>
 <html lang="id" class="dark">
@@ -115,7 +114,7 @@ try {
         <!-- Title & Auto Refresh Indicator -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <a href="menu-makanan.php" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-2.5 rounded-xl text-slate-400 hover:text-white transition-all active:scale-95">
+                <a href="index.php" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 p-2.5 rounded-xl text-slate-400 hover:text-white transition-all active:scale-95">
                     <i class="fa-solid fa-arrow-left text-sm"></i>
                 </a>
                 <div>
