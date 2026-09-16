@@ -267,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 row.className = "flex items-center justify-between text-xs bg-slate-950/60 p-2 rounded-xl border border-slate-800/80";
                 row.innerHTML = `
                     <div class="flex items-center gap-2.5 overflow-hidden pr-2">
-                        <img src="${item.image}" alt="${item.name}" class="w-8 h-8 rounded-lg object-cover bg-slate-800 shrink-0">
+                        <img src="${item.image_url}" alt="${item.name}" class="w-8 h-8 rounded-lg object-cover bg-slate-800 shrink-0">
                         <div class="truncate">
                             <p class="font-bold text-slate-200 text-[11px] truncate">${item.name}</p>
                             <p class="text-[9px] text-slate-400">${item.qty}x • ${item.variant}</p>
