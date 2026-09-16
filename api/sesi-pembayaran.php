@@ -19,10 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $input = json_decode(file_get_contents('php://input'), true);
         
         // ... Logika INSERT ke tabel orders/order_items di PostgreSQL ...
-    
-        echo json_encode(['success' => true, 'message' => 'Pesanan berhasil dibuat']);
-        exit;
-        
         $order_code = $_POST['order_code'] ?? '';
         $proof_img = $_POST['proof_img'] ?? '';
 
@@ -41,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         echo json_encode([
             'success' => true, 
-            'message' => 'Bukti pembayaran berhasil dikirim! Kasir akan segera memverifikasi pesanan Anda.'
+            'message' => 'Bukti pembayaran berhasil dikirim! Kasir akan segera memverifikasi pesanan anda.'
         ]);
         exit;
     } catch (Exception $e) {
-        http_response_code(500);
+        http_response_code(1000);
         echo json_encode(['success' => false, 'error' => $e->getMessage()]);
         exit;
         
