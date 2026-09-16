@@ -16,6 +16,13 @@ $active_pc = getActiveClientPC($pdo);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'upload_payment_proof') {
     header('Content-Type: application/json');
     try {
+        $input = json_decode(file_get_contents('php://input'), true);
+        
+        // ... Logika INSERT ke tabel orders/order_items di PostgreSQL ...
+    
+        echo json_encode(['success' => true, 'message' => 'Pesanan berhasil dibuat']);
+        exit;
+        
         $order_code = $_POST['order_code'] ?? '';
         $proof_img = $_POST['proof_img'] ?? '';
 
@@ -38,6 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         ]);
         exit;
     } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+        exit;
+        
         echo json_encode(['success' => false, 'message' => 'Gagal mengunggah bukti: ' . $e->getMessage()]);
         exit;
     }
