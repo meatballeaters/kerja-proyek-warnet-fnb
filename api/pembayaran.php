@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         echo json_encode([
             'success' => true,
-            'message' => 'Pesanan berhasil dikirim ke kasir & dapur warnet!',
+            'message' => 'Pesanan berhasil dikirim ke kasir!',
             'order_code' => $order_code,
             'order_id' => $order_id,
             'payment_method' => $payment_method,
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         if ($pdo->inTransaction()) {
             $pdo->rollBack();
         }
-        echo json_encode(['success' => false, 'message' => 'Gagal menyimpan ke database MySQL: ' . $e->getMessage()]);
+        echo json_encode(['success' => false, 'message' => 'Gagal menyimpan karena: ' . $e->getMessage()]);
         exit;
     }
 }
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             </button>
             <div>
                 <h1 class="text-xl font-extrabold text-white tracking-wide">Pilih Metode Pembayaran</h1>
-                <p class="text-xs text-slate-400">Tentukan cara pembayaran yang ingin Anda gunakan untuk transaksi ini</p>
+                <p class="text-xs text-slate-400">Tentukan cara pembayaran yang ingin anda gunakan untuk transaksi ini.</p>
             </div>
         </div>
 
@@ -136,10 +136,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                             </div>
                         </div>
                     </div>
-                    <span class="hidden sm:inline-flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold text-xs px-3 py-1 rounded-lg">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        IP Client MySQL Terverifikasi
-                    </span>
                 </div>
 
                 <!-- Formulir Pilihan Metode Pembayaran (Cash & QRIS) -->
@@ -157,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                     <h3 class="text-sm font-extrabold text-white">Bayar di Kasir (Cash / Tunai)</h3>
                                     <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[9px] font-bold px-2 py-0.5 rounded">Rekomendasi</span>
                                 </div>
-                                <p class="text-xs text-slate-400">Bayar uang tunai saat operator kasir mengantar makanan langsung ke meja <b><?= htmlspecialchars($active_pc['pc_name']) ?></b>.</p>
+                                <p class="text-xs text-slate-400">Bayar uang tunai saat operator mengantar pesanan langsung ke meja <b><?= htmlspecialchars($active_pc['pc_name']) ?></b>.</p>
                             </div>
                         </div>
                         <input type="radio" name="payment_method" value="cash" checked class="w-4 h-4 accent-brand-500 shrink-0 cursor-pointer">
@@ -171,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                             </div>
                             <div class="space-y-0.5">
                                 <h3 class="text-sm font-extrabold text-white">QRIS (Scan Barcode Instant)</h3>
-                                <p class="text-xs text-slate-400">Bisa menggunakan Gopay, OVO, DANA, ShopeePay, LinkAja, BCA, atau M-Banking apa saja.</p>
+                                <p class="text-xs text-slate-400">Bisa menggunakan Gopay, OVO, DANA, ShopeePay, LinkAja, BCA, atau M-Banking lainnya.</p>
                             </div>
                         </div>
                         <input type="radio" name="payment_method" value="qris" class="w-4 h-4 accent-brand-500 shrink-0 cursor-pointer">
@@ -220,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <!-- Jaminan Keamanan -->
                     <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 flex items-start gap-2 text-[10px] text-slate-400">
                         <i class="fa-solid fa-shield-halved text-emerald-400 text-xs mt-0.5 shrink-0"></i>
-                        <p>Setelah mengonfirmasi, pesanan otomatis tersimpan di Database MySQL & diteruskan ke dapur warnet.</p>
+                        <p>Setelah mengonfirmasi, pesanan otomatis tersimpan.</p>
                     </div>
                 </div>
             </div>
@@ -246,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             cartItems = JSON.parse(localStorage.getItem('cyberbite_cart') || '[]');
             if (cartItems.length === 0) {
                 // Jika keranjang kosong, redirect kembali ke halaman makanan
-                window.location.href = 'menu-makanan.php';
+                window.location.href = 'index.php';
                 return;
             }
             renderSummarySidebar();
@@ -304,7 +300,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
             const btnConfirm = document.getElementById('btn-confirm-pay');
             btnConfirm.disabled = true;
-            btnConfirm.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-xs"></i> <span>Menyimpan ke Database MySQL...</span>`;
+            btnConfirm.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-xs"></i> <span>Menyimpan...</span>`;
 
             const formData = new FormData();
             formData.append('action', 'process_order');
@@ -344,7 +340,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 }
             } catch (err) {
                 console.error(err);
-                alert("Terjadi kesalahan koneksi server lokal!");
+                alert("Terjadi kesalahan koneksi server, silahkan coba lagi.");
                 btnConfirm.disabled = false;
                 btnConfirm.innerHTML = `<i class="fa-solid fa-lock text-xs"></i> <span>Bayar sekarang!</span>`;
             }
